@@ -14,11 +14,16 @@ cp .env.example .env
 
 Generate two different random hex values with `python3 -c 'import secrets; print(secrets.token_hex(32))'` and put them in `.env` as `ADMIN_TOKEN` and `POSTGRES_PASSWORD`. Use a hex password so it is safe inside the example connection URL.
 
+On Windows PowerShell, use `Copy-Item .env.example .env` instead of `cp` if that alias is unavailable, then edit `.env` to set the two values. Start Docker with `docker compose up --build -d`. The demo reads `ADMIN_TOKEN` from `.env` automatically, so run:
+
+```powershell
+python scripts/demo.py
+```
+
+If you instead keep the token outside `.env`, set it in the current PowerShell window before running the demo: `$env:ADMIN_TOKEN = 'your-token'`. Do not use Bash's `set -a` in PowerShell.
+
 ```sh
 docker compose up --build -d
-set -a
-. ./.env
-set +a
 python3 scripts/demo.py
 ```
 
